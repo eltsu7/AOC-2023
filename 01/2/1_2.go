@@ -1,23 +1,21 @@
-package main
+package day1_2
 
 import (
 	"bufio"
 	"log"
 	"os"
 	"strconv"
-	"time"
 )
 
 func readInput() *bufio.Scanner {
-	file, err := os.Open("input.txt")
+	file, err := os.Open("./01/input.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
 	return bufio.NewScanner(file)
 }
 
-func main() {
-	start := time.Now()
+func Execute() int {
 	scanner := readInput()
 
 	sum := 0
@@ -27,9 +25,7 @@ func main() {
 		digit, _ := strconv.Atoi(first + last)
 		sum += digit
 	}
-	println("Final sum:", sum)
-	elapsed := time.Since(start)
-	println("Execution time:", elapsed.String())
+	return sum
 }
 
 func getFirstAndLastDigit(line string) (string, string) {
