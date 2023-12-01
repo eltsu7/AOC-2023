@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"time"
 )
 
 func readInput() *bufio.Scanner {
@@ -16,6 +17,7 @@ func readInput() *bufio.Scanner {
 }
 
 func main() {
+	start := time.Now()
 	scanner := readInput()
 
 	sum := 0
@@ -26,6 +28,8 @@ func main() {
 		sum += digit
 	}
 	println("Final sum:", sum)
+	elapsed := time.Since(start)
+	println("Execution time:", elapsed.String())
 }
 
 func getFirstAndLastDigit(line string) (string, string) {
