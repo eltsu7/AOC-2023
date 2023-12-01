@@ -81,7 +81,6 @@ func getFirstAndLastDigit(line string) (string, string) {
 			if len(line)-lineIndex < len(digit) {
 				continue
 			}
-
 			for digitIndex := range digit {
 				if line[lineIndex+digitIndex] != digit[digitIndex] {
 					found = false
