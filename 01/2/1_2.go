@@ -2,10 +2,23 @@ package day1_2
 
 import (
 	"bufio"
+	"fmt"
 	"log"
 	"os"
 	"strconv"
 )
+
+var digitList = []string{
+	"one",
+	"two",
+	"three",
+	"four",
+	"five",
+	"six",
+	"seven",
+	"eight",
+	"nine",
+}
 
 func readInput() *bufio.Scanner {
 	file, err := os.Open("./01/input.txt")
@@ -31,15 +44,57 @@ func Execute() int {
 func getFirstAndLastDigit(line string) (string, string) {
 	first := "-1"
 	last := "-1"
-	for i := 0; i < len(line); i++ {
-		if 47 < int(line[i]) && int(line[i]) < 58 {
-			first = string(line[i])
+	for lineIndex := 0; lineIndex < len(line); lineIndex++ {
+		if 47 < int(line[lineIndex]) && int(line[lineIndex]) < 58 {
+			first = string(line[lineIndex])
+			break
+		}
+		match := false
+
+		for digitListIndex, digit := range digitList {
+			found := true
+			for digitIndex := range digit {
+				if line[lineIndex+digitIndex] != digit[digitIndex] {
+					found = false
+					break
+				}
+			}
+			if found {
+				first = fmt.Sprint(digitListIndex + 1)
+				match = true
+				break
+			}
+		}
+		if match {
 			break
 		}
 	}
-	for i := len(line) - 1; i >= 0; i-- {
-		if 47 < int(line[i]) && int(line[i]) < 58 {
-			last = string(line[i])
+	for lineIndex := len(line) - 1; lineIndex >= 0; lineIndex-- {
+		if 47 < int(line[lineIndex]) && int(line[lineIndex]) < 58 {
+			last = string(line[lineIndex])
+			break
+		}
+		match := false
+
+		for digitListIndex, digit := range digitList {
+			found := true
+			if len(line)-lineIndex < len(digit) {
+				continue
+			}
+
+			for digitIndex := range digit {
+				if line[lineIndex+digitIndex] != digit[digitIndex] {
+					found = false
+					break
+				}
+			}
+			if found {
+				last = fmt.Sprint(digitListIndex + 1)
+				match = true
+				break
+			}
+		}
+		if match {
 			break
 		}
 	}
