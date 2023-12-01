@@ -7,13 +7,30 @@ import (
 	"time"
 )
 
-func measureTime(day int, function func() int) {
+func measureSingle(function func() int) (string, string) {
 	start := time.Now()
 	result := function()
-	fmt.Printf("Day %d,\tResult: %d,\tExecution time: %s\n", day, result, time.Since(start).String())
+	elapsed := time.Since(start)
+	return fmt.Sprint(result), elapsed.String()
+}
+
+func measureThousand(function func() int) string {
+	start := time.Now()
+	for i := 0; i < 10000; i++ {
+		function()
+	}
+	elapsed := time.Since(start) / 10000
+	return elapsed.String()
+}
+
+func printResults(dayName string, function func() int) {
+	res, timeSignle := measureSingle(function)
+	timeThousand := measureThousand(function)
+	fmt.Printf("%s, result: %s, \tSingle time: %s, \t10000x average: %s\n", dayName, res, timeSignle, timeThousand)
 }
 
 func main() {
-	measureTime(1, day1_1.Execute)
-	measureTime(2, day1_2.Execute)
+	println()
+	printResults("1a", day1_1.Execute)
+	printResults("1b", day1_2.Execute)
 }
